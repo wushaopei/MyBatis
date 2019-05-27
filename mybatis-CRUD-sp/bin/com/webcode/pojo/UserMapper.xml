@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!-- 
+  		namespace名称空间
+  		取值一般有两种情况：
+  			一种情况是：使用javaBean的全类名
+  			二种情况是：使用Mapper接口的全类名
+   -->
+<mapper namespace="com.webcode.pojo.User">
+  <!-- 
+  	select标签用来配置一个select语句
+  		id 用来配置一个唯一的标识
+  		resultType 是查询完之后一条记录对应转换成为的javaBean对象"
+  		#{id}是点位符
+   -->
+  <select id="selectUserById" resultType="com.webcode.pojo.User">
+    	select id,last_name lastName,sex from t_user where id = #{id}
+  </select>
+  
+  <!-- 查询全部的User对象 -->
+  <select id="queryUsers" resultType="com.webcode.pojo.User">
+  		select id,last_name lastName,sex from t_user 
+  </select>
+  
+  <!-- parameterType类型（可选） -->
+  <insert id="saveUser" parameterType="com.webcode.pojo.User"  >
+  		
+  		<!-- 
+  			selectKey标签可以定义一些查询语句，这些语句可以选择性地在大标签的sql语句之前或之后执行
+  				我们希望，通过执行一个查询，把最后一次生成的id返回。
+  					order属性配置执行的顺序
+  						BEFORE		之前
+  						AFTER		之后
+  					keyProperty="id"	把数据库返回的主键值注入到bean对象的id属性中
+  					resultType="int"	设置selectKey查询之后返回的类型是什么 int 表示Integer类型
+  		 -->
+<!--   		 <selectKey order="AFTER" keyProperty="id" resultType="int"> -->
+<!--   		 	select last_insert_id -->
+<!--   		 </selectKey> -->
+  		insert into t_user(`last_name`,`sex`) values(#{lastName},#{sex})
+  </insert>
+  
+  <!-- 根据id 删除一个用户 -->
+  <delete id="deleteUserById" parameterType="com.webcode.pojo.User">
+  		delete from t_user where id=#{id}
+  </delete>
+  
+  <!-- 修改用户信息 -->
+  <update id="updateUser" parameterType="com.webcode.pojo.User">
+  		update t_user set last_name = #{lastName},sex=#{sex} where id =#{id}
+  </update>
+</mapper>	
