@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!-- 
+  		namespace名称空间
+  		取值一般有两种情况：
+  			一种情况是：使用javaBean的全类名
+  			二种情况是：使用Mapper接口的全类名
+   -->
+<mapper namespace="com.webcode.pojo.User">
+  <!-- 
+  	select标签用来配置一个select语句
+  		id 用来配置一个唯一的标识
+  		resultType 是查询完之后一条记录对应转换成为的javaBean对象
+  		#{id}是点位符
+   -->
+  <select id="selectUserById" resultType="com.webcode.pojo.User">
+    	select id,last_name lastName,sex from t_user where id = #{id}
+  </select>
+  
+   <!-- 查询全部的User对象 -->
+  <select id="queryUsers" resultType="com.webcode.pojo.User">
+  		select id,last_name lastName,sex from t_user
+  </select>
+	<!--   parameterType 参数类型（可选） -->
+  <insert id="saveUser" parameterType="com.webcode.pojo.User">
+  		insert into t_user('last_name','sex') values(#{lastName},#{sex})
+  </insert>
+  
+<!--   根据id删除一个用户 -->
+  <delete id="deleteUserById" parameterType="int">
+  		delete from t_user where id = #{id}
+  </delete>
+  
+  <update id="updateUser" parameterType="com.webcode.pojo.User">
+  		update t_user set last_name = #{lastName},sex = #{sex} where id = #{id}
+  </update>
+</mapper>
