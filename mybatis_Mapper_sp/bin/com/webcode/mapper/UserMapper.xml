@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!-- 
+  		使用Mapper接口方案，需要注意的第一点事项是：
+  		namespace名称空间值必须是Mapper接口的全类名
+   -->
+<mapper namespace="com.webcode.mapper.UserMapper">
+<!-- 	
+		Mapper接口方案需要注意的第二点事项是：
+			方法名，必须要和id值一致
+		Mapper接口方案需要注意的第三点事项是：
+			返回值类型必须一致
+		Mapper接口方案需要注意的第四点事项是：
+			参数类型也必须一致（写就必须一致）
+ -->
+	<select id="queryUserById" resultType="com.webcode.pojo.User" parameterType="int">
+		select id,last_name lastName,sex from t_user where id = #{id}
+	</select>
+<!-- 	public List<User> queryUsers(); -->
+	<select id="queryUsers" resultType="com.webcode.pojo.User">
+		select id,last_name lastName,sex from t_user
+	</select>
+
+<!-- 	public int saveUser(User user);
+			普通类型可以忽略（主要是javaBean对象）
+ -->
+	<insert id="saveUser" parameterType="com.webcode.pojo.User" useGeneratedKeys="true" keyProperty="id">
+		insert into t_user(last_name,sex) values(#{lastName},#{sex})
+	</insert>
+
+<!-- 	public int deleteUserById(Integer id); -->
+	<delete id="deleteUserById">
+		delete from t_user where id = #{id}
+	</delete>
+<!-- 	public int updateUser(User user); -->
+  	<update id="updateUser" parameterType="com.webcode.pojo.User">
+  		update t_user set last_name = #{lastName},sex = #{sex} where id = #{id}
+  	</update>
+</mapper>

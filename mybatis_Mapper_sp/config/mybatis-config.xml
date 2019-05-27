@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	
+  <!-- 
+		properties标签可以用来定义多组键值对
+			每个property标签是一组键值对 
+		properties标签还可以引入单独的属性配置文件
+			resource="jdbc.properties" 引入classpath路径下的jdbc.properties配置文件
+		源码目录，就是classPath路径
+		
+		properties标签在引入外部属性配置文件和内部定义属性的时候。外部会替换掉内部定义的值。
+	-->
+  <environments default="development">
+    <environment id="development">
+      <transactionManager type="JDBC"/>
+      <dataSource type="POOLED">
+      	<!-- 数据库的四个连接属性 -->
+       <property name="driver" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://129.204.193.250:3306/mybatis"/>
+        <property name="username" value="root"/>
+        <property name="password" value="root"/>
+      </dataSource>
+    </environment>
+  </environments>
+  <mappers>
+    <mapper resource="com/webcode/mapper/UserMapper.xml"/>
+  </mappers>
+</configuration>
